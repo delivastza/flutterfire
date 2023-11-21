@@ -311,12 +311,12 @@ NSString *const kMessagingPresentationOptionsUserDefaults =
              (void (^)(UNNotificationPresentationOptions options))completionHandler
     API_AVAILABLE(macos(10.14), ios(10.0)) {
   // We only want to handle FCM notifications.
-  if (notification.request.content.userInfo[@"gcm.message_id"]) {
+  // if (notification.request.content.userInfo[@"gcm.message_id"]) {
     NSDictionary *notificationDict =
         [FLTFirebaseMessagingPlugin NSDictionaryFromUNNotification:notification];
 
     [_channel invokeMethod:@"Messaging#onMessage" arguments:notificationDict];
-  }
+  // }
 
   // Forward on to any other delegates amd allow them to control presentation behavior.
   if (_originalNotificationCenterDelegate != nil &&
@@ -352,12 +352,12 @@ NSString *const kMessagingPresentationOptionsUserDefaults =
   _notificationOpenedAppID = remoteNotification[@"gcm.message_id"];
   // We only want to handle FCM notifications and stop firing `onMessageOpenedApp()` when app is
   // coming from a terminated state.
-  if (_notificationOpenedAppID != nil &&
-      ![_initialNoticationID isEqualToString:_notificationOpenedAppID]) {
+  // if (_notificationOpenedAppID != nil &&
+  //     ![_initialNoticationID isEqualToString:_notificationOpenedAppID]) {
     NSDictionary *notificationDict =
         [FLTFirebaseMessagingPlugin remoteMessageUserInfoToDict:remoteNotification];
     [_channel invokeMethod:@"Messaging#onMessageOpenedApp" arguments:notificationDict];
-  }
+  // }
 
   // Forward on to any other delegates.
   if (_originalNotificationCenterDelegate != nil &&
@@ -424,7 +424,7 @@ NSString *const kMessagingPresentationOptionsUserDefaults =
 - (void)application:(NSApplication *)application
     didReceiveRemoteNotification:(NSDictionary *)userInfo {
   // Only handle notifications from FCM.
-  if (userInfo[@"gcm.message_id"]) {
+  // if (userInfo[@"gcm.message_id"]) {
     NSDictionary *notificationDict =
         [FLTFirebaseMessagingPlugin remoteMessageUserInfoToDict:userInfo];
 
@@ -433,7 +433,7 @@ NSString *const kMessagingPresentationOptionsUserDefaults =
     } else {
       [_channel invokeMethod:@"Messaging#onBackgroundMessage" arguments:notificationDict];
     }
-  }
+  // }
 }
 #endif
 
@@ -451,7 +451,7 @@ NSString *const kMessagingPresentationOptionsUserDefaults =
   NSDictionary *notificationDict =
       [FLTFirebaseMessagingPlugin remoteMessageUserInfoToDict:userInfo];
   // Only handle notifications from FCM.
-  if (userInfo[@"gcm.message_id"]) {
+  // if (userInfo[@"gcm.message_id"]) {
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
       __block BOOL completed = NO;
 
@@ -509,8 +509,8 @@ NSString *const kMessagingPresentationOptionsUserDefaults =
     }
 
     return YES;
-  }  // if (userInfo[@"gcm.message_id"])
-  return NO;
+  // }  // if (userInfo[@"gcm.message_id"])
+  // return NO;
 }  // didReceiveRemoteNotification
 #endif
 
